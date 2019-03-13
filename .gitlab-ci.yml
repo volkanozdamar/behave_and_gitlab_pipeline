@@ -1,0 +1,22 @@
+test:
+  image: ubuntu:latest
+  before_script:
+    - apt-get update -y
+    - apt-get install build-essential chrpath libssl-dev libxft-dev libfreetype6-dev libfreetype6 libfontconfig1-dev libfontconfig1 -y
+    - apt-get install wget -y
+    - apt install python3-pip -y
+    - pip3 install behave
+    - pip3 install -U selenium
+    - pip3 install nose
+    - wget https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-linux-x86_64.tar.bz2
+    - tar xvjf phantomjs-2.1.1-linux-x86_64.tar.bz2 -C /usr/local/share/
+    - ln -s /usr/local/share/phantomjs-2.1.1-linux-x86_64/bin/phantomjs /usr/local/bin/
+    - phantomjs --version
+    - apt install firefox -y
+    - wget https://github.com/mozilla/geckodriver/releases/download/v0.24.0/geckodriver-v0.24.0-linux64.tar.gz
+    - tar -xvf geckodriver-v0.24.0-linux64.tar.gz
+    - mv geckodriver /usr/local/bin/
+    - chmod +x /usr/local/bin/geckodriver
+    - apt-get install xvfb -y
+  script:
+    - xvfb-run behave features/*.feature
